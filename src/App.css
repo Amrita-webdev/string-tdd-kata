@@ -1,0 +1,16 @@
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  flex-direction: column;
+}
+
+.input-box{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.input-box > input{
+  height: 2rem;
+}
