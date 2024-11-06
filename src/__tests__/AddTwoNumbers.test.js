@@ -45,5 +45,28 @@ describe('Add Numbers', () => {
 
         expect(result).toHaveTextContent('6')
     });
+    test('method handles any custom delimiter', () => {
+        render(<AddTwoNumbers />)
+        const input = screen.getByTestId('input-field')
+        const button = screen.getByTestId('button')
+        const result = screen.getByTestId('result')
+
+        fireEvent.change(input, { target: {value: '//;\n1;2'} });
+        fireEvent.click(button)
+
+        expect(result).toHaveTextContent('3')
+    });
+    test('method should throw exception if negative numbers are given as input', () => {
+        render(<AddTwoNumbers />)
+        const input = screen.getByTestId('input-field')
+        const button = screen.getByTestId('button')
+        const error = screen.getByTestId('error')
+
+        fireEvent.change(input, { target: {value: '1,2,-3'} });
+        fireEvent.click(button)
+        expect(error).toBeInTheDocument();
+
+        expect(error).toHaveTextContent('Negative numbers not allowed: -3')
+    })
     
 })

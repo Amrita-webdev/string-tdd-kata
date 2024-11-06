@@ -15,8 +15,13 @@ const AddTwoNumbers = () => {
             const parsedNum = Number(num.trim());
             return isNaN(parsedNum) ? 0 : parsedNum;
         });
-    
-        // Sum up the numbers
+
+        const negativeNumbers = numArray.filter(num => num < 0);
+        
+        if (negativeNumbers.length > 0) {
+            throw new Error(`Negative numbers not allowed: ${negativeNumbers.join(", ")}`);
+        }
+
         const sum = numArray.reduce((acc, num) => acc + num, 0);
     
         return sum;
