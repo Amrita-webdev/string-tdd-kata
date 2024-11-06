@@ -12,6 +12,17 @@ describe('Add Numbers', () => {
         expect(input).toBeInTheDocument();
         expect(button).toBeInTheDocument()
     });
+    test('returns 0 if no input is given', () => {
+        render(<AddTwoNumbers />)
+        const input = screen.getByTestId('input-field')
+        const button = screen.getByTestId('button')
+        const result = screen.getByTestId('result')
+
+        fireEvent.change(input, { target: {value: ''} });
+        fireEvent.click(button)
+
+        expect(result).toHaveTextContent('0')
+    });
     test('adds comma separated arguments', () => {
         render(<AddTwoNumbers />)
         const input = screen.getByTestId('input-field')

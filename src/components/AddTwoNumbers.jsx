@@ -10,19 +10,44 @@ const AddTwoNumbers = () => {
         if (numbers === "") {
             return 0;
         }
+    
+        let delimiter = ",";
+        let numSection = numbers;
 
-        const numArray = numbers.split(/[\n,]+/).map(num => {
-            const parsedNum = Number(num.trim());
-            return isNaN(parsedNum) ? 0 : parsedNum;
-        });
+        if (numbers.startsWith("//")) {
+            const delimiterEndIndex = numbers.indexOf("\n");
+    
+            delimiter = numbers.slice(2, delimiterEndIndex);
 
-        const negativeNumbers = numArray.filter(num => num < 0);
-        
+            numSection = numbers.slice(delimiterEndIndex + 1);
+        }
+
+        const splitDelimiters = [delimiter, "\n", ","];
+
+        let delimiterRegex = new RegExp(`[${splitDelimiters.join('')}]`);
+
+        let numArray = numSection.split(delimiterRegex).map(num => num.trim());
+
+        let sum = 0;
+        const negativeNumbers = [];
+    
+        for (let i = 0; i < numArray.length; i++) {
+            const num = Number(numArray[i]);
+    
+            if (isNaN(num)) {
+                continue;
+            }
+    
+            if (num < 0) {
+                negativeNumbers.push(num);
+            } else {
+                sum += num;
+            }
+        }
+
         if (negativeNumbers.length > 0) {
             throw new Error(`Negative numbers not allowed: ${negativeNumbers.join(", ")}`);
         }
-
-        const sum = numArray.reduce((acc, num) => acc + num, 0);
     
         return sum;
     }
