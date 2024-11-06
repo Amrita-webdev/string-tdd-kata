@@ -7,20 +7,21 @@ const AddTwoNumbers = () => {
     const [error, setError] = useState('')
     
     function add(numbers) {
-        // If the input string is empty, return 0
         if (numbers === "") {
             return 0;
         }
-    
-        // Split the string by commas and convert the substrings to numbers
-        const numArray = numbers.split(",").map(Number);
+
+        const numArray = numbers.split(/[\n,]+/).map(num => {
+            const parsedNum = Number(num.trim());
+            return isNaN(parsedNum) ? 0 : parsedNum;
+        });
     
         // Sum up the numbers
         const sum = numArray.reduce((acc, num) => acc + num, 0);
     
         return sum;
     }
-    
+
     const addNumbers = () => {
         try{
             const sum = add(input)

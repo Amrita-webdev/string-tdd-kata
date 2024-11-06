@@ -34,5 +34,16 @@ describe('Add Numbers', () => {
 
         expect(result).toHaveTextContent('55')
     });
+    test('method handles new lines between numbers(instead of commas)', () => {
+        render(<AddTwoNumbers />)
+        const input = screen.getByTestId('input-field')
+        const button = screen.getByTestId('button')
+        const result = screen.getByTestId('result')
+
+        fireEvent.change(input, { target: {value: '1\n2,3'} });
+        fireEvent.click(button)
+
+        expect(result).toHaveTextContent('6')
+    });
     
 })
